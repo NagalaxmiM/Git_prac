@@ -1,2 +1,1 @@
-Implementation of Sanic, git, python.
-
+Implementation of Sanic, git, python with EXCEPTION technique.
