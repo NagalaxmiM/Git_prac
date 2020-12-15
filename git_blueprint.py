@@ -7,9 +7,9 @@ async def on_post(request):
     try:
         details_json = []
         data = requests.get('https://api.github.com/users?per_page=10').json()
-        for i in data:
+        for evey_user in data:
             user_details = dict()
-            for key,value in i.items():
+            for key,value in evey_user.items():
                 if key in ['id','login','url']:
                     user_details.update({key:value})
             details_json.append(user_details)
