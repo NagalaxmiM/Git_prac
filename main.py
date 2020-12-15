@@ -1,5 +1,5 @@
 from sanic import Sanic
-from blue_print import bp
+from git_blueprint import bp
 
 app = Sanic(__name__)
 app.blueprint(bp)
