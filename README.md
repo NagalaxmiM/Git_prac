@@ -1,1 +1,1 @@
-Sanic, postgres, Sqlalchemy, git, python 
+Implementation of Sanic, postgres, Sqlalchemy, git, python 
