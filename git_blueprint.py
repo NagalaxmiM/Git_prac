@@ -18,3 +18,4 @@ async def on_post(request):
         return response.json(details_json) 
     except:
         return response.text("Server down . Try again after sometime...")
+
