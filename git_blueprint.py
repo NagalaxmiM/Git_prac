@@ -3,7 +3,7 @@ import requests
 bp = Blueprint("git_blueprint")
 
 @bp.route("/external/GitHub/users")
-async def on_post(request):
+async def on_post():
     try:
         details_json = []
         data = requests.get('https://api.github.com/users?per_page=10').json()
