@@ -1,9 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-Scripts/
-pyvenv.cfg
 *.py[cod]
 *$py.class
+Scripts/
+pyvenv.cfg
 
 # C extensions
 *.so
