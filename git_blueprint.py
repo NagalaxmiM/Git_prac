@@ -16,7 +16,6 @@ async def on_post(request):
             details_json.append(user_details)
             del user_details
         
-        print(details_json)
         df =  DataFrame(details_json)
         df = df.set_index("id")
         return response.html(df.to_html())
