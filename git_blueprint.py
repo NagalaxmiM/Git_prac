@@ -1,4 +1,5 @@
 from sanic import Blueprint, response
+from pandas import DataFrame
 import requests
 bp = Blueprint("git_blueprint")
 
@@ -14,7 +15,10 @@ async def on_post(request):
                     user_details.update({key:value})
             details_json.append(user_details)
             del user_details
+        
         print(details_json)
-        return response.json(details_json) 
+        df =  DataFrame(details_json)
+        df = df.set_index("id")
+        return response.html(df.to_html())
     except:
         return response.json([{"error":["Internal Server Error!"]},{"status": 500}])
