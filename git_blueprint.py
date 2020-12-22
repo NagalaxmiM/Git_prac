@@ -17,4 +17,4 @@ async def on_post(request):
         print(details_json)
         return response.json(details_json) 
     except:
-        return response.text("Server down . Try again after sometime...")
+        return response.json([{"error":["Internal Server Error!"]},{"status": 500}])
