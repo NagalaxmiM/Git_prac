@@ -20,4 +20,4 @@ async def on_post(request):
         df = df.set_index("id")
         return response.html(df.to_html())
     except:
-        return response.json([{"error":["Internal Server Error!"]},{"status": 500}])
+        return response.html("<h1>500-Internal server Error</h1>")
