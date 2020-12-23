@@ -1,4 +1,5 @@
 from sanic import Blueprint, response
+
 import requests
 bp = Blueprint("git_blueprint")
 
