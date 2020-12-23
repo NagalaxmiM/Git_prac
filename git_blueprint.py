@@ -14,7 +14,8 @@ async def on_post(request):
                     user_details.update({key:value})
             details_json.append(user_details)
             del user_details
-        print(details_json)
-        return response.json(details_json) 
+        #print(details_json)
+        details_html = response.json(details_json)
+        return response.file("homepage.html",details_html) 
     except:
         return response.json([{"error":["Internal Server Error!"]},{"status": 500}])
