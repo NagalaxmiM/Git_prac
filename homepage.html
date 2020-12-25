@@ -15,7 +15,7 @@
 			    
 				var mainContainer = document.getElementById("response");
                 for (var i = 0; i < data.length; i++) {
-				    for (var j = 0; j<data.length;j++){
+				    for (var j = 0; j<i.length;j++){
                         var div = document.createElement("response");
                         div.innerHTML = 'login: ' + data[i]['login'] + ' id:' + data[i].['id'] + ' url:' + data[i].['url];
                         mainContainer.appendChild(response);
