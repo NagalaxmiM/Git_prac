@@ -3,7 +3,7 @@ from sanic import Blueprint, response
 import requests
 bp = Blueprint("git_blueprint")
 
-@bp.route("/external/GitHub/users/homepage")
+@bp.route("/external/GitHub/users")
 async def on_post(request):
     try:
         details_json = []
@@ -15,8 +15,7 @@ async def on_post(request):
                     user_details.update({key:value})
             details_json.append(user_details)
             del user_details
-        #print(details_json)
-        details_html = response.json(details_json)
-        return response.empty()
+
+        return response.json(details_json)
     except:
         return response.json([{"error":["Internal Server Error!"]},{"status": 500}])

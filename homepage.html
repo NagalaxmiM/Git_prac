@@ -1,49 +1,26 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Home</title>
-	
-</head>
-
+<html lang="en">
+<title>Github Users List</title>
 <body>
-<input type="button" onclick="CreateTableFromJSON()" value="Get Details from Github API" />
-<p id="showDetails"></p>
+    <div>
+    <h1>Github Users List</h1>
+	<button id="userdatabtn">Fetch</button>
+    </div>
+	<div id="response"></div>
+    <script>
+	    document.getElementById('userdatabtn').addEventListener('click',fetchUserData);
+		
+		function fetchUserData(){
+		    fetch('http://127.0.0.1:8000/external/GitHub/users')
+			    
+				var mainContainer = document.getElementById("response");
+                for (var i = 0; i < data.length; i++) {
+				    for (var j = 0; j<data.length;j++){
+                        var div = document.createElement("response");
+                        div.innerHTML = 'login: ' + data[i]['login'] + ' id:' + data[i].['id'] + ' url:' + data[i].['url];
+                        mainContainer.appendChild(response);
+				   }}
+				
+    </script>
 </body>
-   
-
-<script>
-   function CreateTableFromJSON(){
-      var details = {{details_json}}
-	  for(var i = 0;i < details.length;i++){
-	      for(var key in details[i]){
-		      if (col.indexof(key) == -1){
-			      col.push(key);
-				  }
-				 }
-			}
-
-   var table = document.createElement("table");			
-   
-   var tr = table.insertRow(-1);
-   
-   for(var i=0; i<col.length; i++){
-       var th = document.createElement("th");
-	   th.innerHTML = col[i];
-	   tr.appendChild(th);
-	   }
-	   
-   for(var i = 0;i<details.length; i++){
-       tr = table.insertRow(-1);
-       for (var j = 0; j<col.length;j++){
-           var tabCell = tr.insertCell(-1);
-           tabCell.innerHTML = details[i][col[j]];
-        }
-     }
-
-    var divContainer = document.getElementById("showDetails");
-	divContainer.innerHTML = "";
-	divContainer.appendChild(table);
-	}
-				 
-</script>
 </html>
