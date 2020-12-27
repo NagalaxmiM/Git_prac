@@ -4,21 +4,27 @@
 <body>
     <div>
     <h1>Github Users List</h1>
-	<button id="userdatabtn">Fetch</button>
     </div>
-	<div id="response"></div>
+	<div id="resp"></div>
     <script>
-	    document.getElementById('userdatabtn').addEventListener('click',fetchUserData);
+	    fetch('http://127.0.0.1:8000/external/GitHub/users')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                jsonDetails(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
 		
-		function fetchUserData(){
-		    fetch('http://127.0.0.1:8000/external/GitHub/users')
-			    
-				var mainContainer = document.getElementById("response");
+		function jsonDetails(data){
+				var mainContainer = document.getElementById("resp");
                 for (var i = 0; i < data.length; i++) {
 				    for (var j = 0; j<i.length;j++){
-                        var div = document.createElement("response");
-                        div.innerHTML = 'login: ' + data[i]['login'] + ' id:' + data[i].['id'] + ' url:' + data[i].['url];
-                        mainContainer.appendChild(response);
+                        var div = document.createElement("div");
+                        div.innerHTML = 'login: ' + response[i]['login'] + ' id:' + response[i].['id'] + ' url:' + response[i].['url];
+                        mainContainer.appendChild(div);
 				   }}
 				
     </script>
