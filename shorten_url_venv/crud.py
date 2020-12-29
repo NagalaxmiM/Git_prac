@@ -22,15 +22,11 @@ def session_scope():
     finally:
         session.close()
         
-#def addData_post(url_dict):
-    
-
-
 def recreate_database():
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     
-if __name__=='__main__':
-    recreate_database()
+recreate_database()
+s = Session()
     
     
