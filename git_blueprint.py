@@ -1,10 +1,8 @@
 from sanic import Blueprint, response
-from sanic_cors import cross_origin
 import requests
 bp = Blueprint("git_blueprint")
 
 @bp.route("/external/GitHub/users")
-@cross_origin(bp)
 async def on_post(request):
     try:
         details_json = []
