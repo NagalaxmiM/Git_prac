@@ -1,4 +1,4 @@
-from models import Base, Shorten_url
+from models import Base
 from contextlib import contextmanager
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -24,20 +24,3 @@ def session_scope():
         
 Base.metadata.create_all(engine)
 
-def Shorten_url_exe(url):
-    s = Session()
-    short_url = Shorten_url(url=url)
-    link = s.query.filter_by(short_url=short_url).first()
-    while link:
-        link = Shorten_url(url=url)
-        link = s.query.filter_by(short_url=link).first()
-    
-    s.add(short_url)
-    s.commit()
-    
-    
-    
-
-
-    
-    
