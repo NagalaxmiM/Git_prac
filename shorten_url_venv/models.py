@@ -17,10 +17,13 @@ class Shorten_url(Base):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        BITLY_ACCESS_TOKEN = "68c406d2d411218d2d18ea39f1a3bd3cfce520bf"
-        access = bitly_api.Connection(access_token = BITLY_ACCESS_TOKEN)
-        self.short_url = access.shorten(self.url)
-        return self.short_url
+        #API_USER = "nagalaxmim"
+        API_KEY = "68c406d2d411218d2d18ea39f1a3bd3cfce520bf" 
+        access = bitly_api.Connection(access_token = API_KEY)
+        
+        shortened_url = access.shorten(self.url)
+        self.short_url = shortened_url['url']
+        #return self.short_url
     '''def generate_short_link(self):
         
         characters = string.digits + string.ascii_letters
