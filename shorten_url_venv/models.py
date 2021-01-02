@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 import string
-
+import bitly_api
 from random import choices
 Base = declarative_base()
 
@@ -13,19 +13,22 @@ class Shorten_url(Base):
     short_url = Column(String(6), unique = True)
     
     
-
+    
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.short_url = self.generate_short_link()
-        
-    def generate_short_link(self):
+        BITLY_ACCESS_TOKEN = "68c406d2d411218d2d18ea39f1a3bd3cfce520bf"
+        access = bitly_api.Connection(access_token = BITLY_ACCESS_TOKEN)
+        self.short_url = access.shorten(self.url)
+        return self.short_url
+    '''def generate_short_link(self):
         
         characters = string.digits + string.ascii_letters
         short_url = ''.join(choices(characters, k=3))
         #link = self.query.filter_by(short_url=self.short_url).first()
         
         #self.add(short_url)
-        #self.commit()
-        return short_url
+        #self.commit()'''
+        
     
     
