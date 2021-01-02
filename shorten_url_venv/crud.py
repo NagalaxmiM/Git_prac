@@ -1,9 +1,9 @@
-from sqlalchemy import create_engine
-from datetime import datetime
-from sqlalchemy.orm import sessionmaker
-from config import DATABASE_URI
 from models import Base, Shorten_url
 from contextlib import contextmanager
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from config import DATABASE_URI
+
 
 
 engine = create_engine(DATABASE_URI)
@@ -22,11 +22,22 @@ def session_scope():
     finally:
         session.close()
         
-def recreate_database():
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)
+
+def Shorten_url_exe(url):
+    s = Session()
+    short_url = Shorten_url(url=url)
+    link = s.query.filter_by(short_url=short_url).first()
+    while link:
+        link = Shorten_url(url=url)
+        link = s.query.filter_by(short_url=link).first()
     
-recreate_database()
-s = Session()
+    s.add(short_url)
+    s.commit()
+    
+    
+    
+
+
     
     
