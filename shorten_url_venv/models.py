@@ -12,7 +12,7 @@ class Shorten_url(Base):
     __tablename__='urls'
     id = Column(Integer, primary_key=True)
     url = Column(String(1024))
-    short_url = Column(String(6), unique = True)
+    short_url = Column(String(1024), unique = True)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
