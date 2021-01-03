@@ -16,8 +16,8 @@ class Shorten_url(Base):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        API_USER = "nagalaxmim"
-        API_KEY = "68c406d2d411218d2d18ea39f1a3bd3cfce520bf" 
+        API_USER = "o_63vlrght6t"
+        API_KEY = "2fa1d905646fe5aab2ef73b3e6338f8e7032eb12" 
         access = bitlyapi.BitLy(API_USER,API_KEY)
         
         shortened_url = access.shorten(longurl = self.url)
