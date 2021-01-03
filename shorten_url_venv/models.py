@@ -1,6 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
-import bitlyapi
+import bitly_api
 
 
 Base = declarative_base()      
@@ -16,11 +16,11 @@ class Shorten_url(Base):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        API_USER = "o_63vlrght6t"
+        #API_USER = "o_63vlrght6t"
         API_KEY = "2fa1d905646fe5aab2ef73b3e6338f8e7032eb12" 
-        access = bitlyapi.BitLy(API_USER,API_KEY)
+        access = bitly_api.Connection(access_token = API_KEY)
         
-        shortened_url = access.shorten(longurl = self.url)
+        shortened_url = access.shorten(self.url)
         self.short_url = shortened_url['url']
        
         
