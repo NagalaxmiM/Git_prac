@@ -6,8 +6,12 @@ bp = Blueprint('shortenUrlBlueprint')
 
 @bp.route("/POST/shorten")
 async def on_post(request):
-    url = "http://127.0.0.1:61949/browser"
+    s = Session()
+    url = "http://hello"
     Shorten_url(url=url)
+    link = Shorten_url.short_url
+    s.add(link)
+    s.commit()
     return response.html('<h1>Success</h1>')
 
 @bp.route("DELETE/shorten/<id>")
