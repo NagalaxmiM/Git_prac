@@ -7,7 +7,7 @@ bp = Blueprint('shortenUrlBlueprint')
 @bp.route("/POST/shorten")
 async def on_post(request):
     s = Session()
-    url = "http://hello"
+    url = "https://hello"
     Shorten_url(url=url)
     link = Shorten_url.short_url
     s.add(link)
