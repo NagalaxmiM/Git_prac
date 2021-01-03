@@ -8,8 +8,7 @@ bp = Blueprint('shortenUrlBlueprint')
 async def on_post(request):
     s = Session()
     url = "https://www.learndatasci.com/tutorials/using-databases-python-postgres-sqlalchemy-and-alembic/"
-    Shorten_url(url=url)
-    link = Shorten_url.short_url
+    link = Shorten_url(url=url)
     s.add(link)
     s.commit()
     return response.html('<h1>Success</h1>')
