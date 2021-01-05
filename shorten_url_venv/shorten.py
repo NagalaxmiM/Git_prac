@@ -7,24 +7,41 @@ bp = Blueprint('shortenUrlBlueprint')
 @bp.route("/POST/shorten")
 async def on_post(request):
     s = Session()
-    url = "https://www.google.co.in/"
-    link = Shorten_url(url=url)
+    url_json = {"url": "http://127.0.0.1:60887/browser/"}
+    if s.query(Shorten_url).filter_by(url=url_json['url']).first().url:
+        short_url = s.query(Shorten_url).filter_by(url=url_json['url']).first().short_url
+        id = s.query(Shorten_url).filter_by(url=url_json['url']).first().id
+        s.close()
+        return response.json({"url": url_json['url'], "shortUrl": short_url, "id": id})
+    link = Shorten_url(url=url_json['url'])
     s.add(link)
     s.commit()
-    return response.html('<h1>Success</h1>')
+    short_url = s.query(Shorten_url).filter_by(url=url_json['url']).first().short_url
+    id = s.query(Shorten_url).filter_by(url=url_json['url']).first().id
+    s.close()
+    return response.json({"url": url_json['url'], "shortUrl": short_url, "id": id})
 
 @bp.route("/DELETE/shorten/<id>")
 async def on_delete(request,id):
     s = Session()
-    to_be_deleted = s.query(Shorten_url).filter_by(id=id).first()
-    s.delete(to_be_deleted)
-    s.commit()
-    return response.html("<h1>Deleted</h1>")
+    try:
+        to_be_deleted = s.query(Shorten_url).filter_by(id=id).first()
+        s.delete(to_be_deleted)
+        s.commit()
+    except:
+        return response.text("Invalid ID!")
+    finally:
+        s.close()
+    return response.json({"success": "true"})
 
 @bp.route("/GET/<short_url>")
 async def on_get(request,short_url):
     s = Session()
-    actual_url = s.query(Shorten_url).filter_by(short_url=short_url).first().url
-    s.commit()
-    return response.text(actual_url)
+    try:
+        actual_url = s.query(Shorten_url).filter_by(short_url=short_url).first().url
+        return response.json({"success": "true", "url":actual_url })
+    except:
+        return response.text("Invalid SHORT URL !!")
+    finally:
+        s.close()
     
