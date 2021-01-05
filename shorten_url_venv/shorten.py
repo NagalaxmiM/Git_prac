@@ -4,22 +4,21 @@ from crud import Session
 
 bp = Blueprint('shortenUrlBlueprint')
 
-@bp.route("/POST/shorten")
+@bp.route("/POST/shorten", methods=['POST'])
 async def on_post(request):
     s = Session()
-    url_json = {"url": "http://127.0.0.1:60887/browser/"}
-    if s.query(Shorten_url).filter_by(url=url_json['url']).first().url:
-        short_url = s.query(Shorten_url).filter_by(url=url_json['url']).first().short_url
-        id = s.query(Shorten_url).filter_by(url=url_json['url']).first().id
+    if s.query(Shorten_url).filter_by(url=request.json['url']).first().url:
+        short_url = s.query(Shorten_url).filter_by(url=request.json['url']).first().short_url
+        id = s.query(Shorten_url).filter_by(url=request.json['url']).first().id
         s.close()
-        return response.json({"url": url_json['url'], "shortUrl": short_url, "id": id})
-    link = Shorten_url(url=url_json['url'])
+        return response.json({"url": request.json['url'], "shortUrl": short_url, "id": id, "success": "true"})
+    link = Shorten_url(url=request.json['url'])
     s.add(link)
     s.commit()
-    short_url = s.query(Shorten_url).filter_by(url=url_json['url']).first().short_url
-    id = s.query(Shorten_url).filter_by(url=url_json['url']).first().id
+    short_url = s.query(Shorten_url).filter_by(url=request.json['url']).first().short_url
+    id = s.query(Shorten_url).filter_by(url=request.json['url']).first().id
     s.close()
-    return response.json({"url": url_json['url'], "shortUrl": short_url, "id": id})
+    return response.json({"url": request.json['url'], "shortUrl": short_url, "id": id, "success": "true"})
 
 @bp.route("/DELETE/shorten/<id>")
 async def on_delete(request,id):
