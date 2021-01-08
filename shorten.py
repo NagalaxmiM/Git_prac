@@ -4,7 +4,7 @@ from crud import Session
 
 bp = Blueprint('shortenUrlBlueprint')
 
-@bp.route("/POST/shorten", methods=['POST'])
+@bp.route("/POST/shorten", methods=['POST', 'GET'])
 async def on_post(request):
     s = Session()
     if s.query(Shorten_url).filter_by(url=request.json['url']).first().url:
