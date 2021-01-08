@@ -2,6 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 import string
 import random
+import hashlib
 
 Base = declarative_base()      
 
@@ -17,8 +18,11 @@ class Shorten_url(Base):
         self.short_url = self.generate_short_url(self.url)
 
     def generate_short_url(self, url):
-        characters = string.ascii_letters + string.digits
-        return ''.join(random.choices(characters,k=3))
+        short_url = hashlib.md5(self.url.encode()).hexdigest()
+        link = self.query.filter_by(short_url=short_url).first()
+        if link:
+            return generate_short_url(self.url)
+        return short_url
        
         
     
