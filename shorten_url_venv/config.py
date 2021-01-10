@@ -1,1 +1,0 @@
-DATABASE_URI = 'postgres+psycopg2://postgres:chinminki@1974@localhost:5432/shorten_url'
