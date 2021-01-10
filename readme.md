@@ -1,0 +1,1 @@
+A simple URL shortening service which uses sha1 algorithm for generating short url.
