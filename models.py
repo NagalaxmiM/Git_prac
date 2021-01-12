@@ -22,6 +22,6 @@ class Shorten_url(Base):
         
         if link:
             return self.generate_short_url(self, url)
-        
+        return short_url
     
     

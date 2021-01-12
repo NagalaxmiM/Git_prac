@@ -4,26 +4,26 @@ from crud import Session
 import json 
 bp = Blueprint('shortenUrlBlueprint')
 
-@bp.route("/POST/shorten", methods=['POST'])  
+@bp.route("/shorten", methods=['POST'])  
 async def on_post(request): 
     s = Session()
     url_dict = request.json
-    #url_string = data.decode('utf-8').replace("'", '"')
-    #url_dict = json.loads(url_string)
     
-    if s.query(Shorten_url).filter_by(url=url_dict['url']).first().url:
-        short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
-        id = s.query(Shorten_url).filter_by(url=url_dict['url']).first().id
+    #checking if the entered url is already in the database, if yes return already created short_url
+    if s.query(Shorten_url).filter_by(url=url_dict['url'] is not None):
+        short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).short_url
+        id = s.query(Shorten_url).filter_by(url=url_dict['url']).id
+        s.close()
+        return response.json({"url": url_dict['url'], "shortUrl": short_url, "id": id, "success": "true"})
+    else:
+        link = Shorten_url(url=url_dict['url'])
+        s.add(link)
+        s.commit()
+        short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).short_url
+        id = s.query(Shorten_url).filter_by(url = url_dict['url']).id
         s.close()
         return response.json({"url": url_dict['url'], "shortUrl": short_url, "id": id, "success": "true"})
     
-    link = Shorten_url(url=url_dict['url'])
-    s.add(link)
-    s.commit()
-    short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
-    id = s.query(Shorten_url).filter_by(url = url_dict['url']).first().id
-    s.close()
-    return response.json({"url": url_dict['url'], "shortUrl": short_url, "id": id, "success": "true"})
 
 @bp.route("/DELETE/shorten/<id>")
 async def on_delete(request,id):
