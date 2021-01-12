@@ -4,9 +4,12 @@ from crud import Session
 import json 
 bp = Blueprint('shortenUrlBlueprint')
 
-@bp.route("/generate_url/<url_dict>", methods=['POST','GET'])  
+@bp.route("/POST/shorten", methods=['POST'])  
 async def gen_url(request, url_dict): 
     s = Session()
+    data = request.body
+    url_string = data.decode('utf-8').replace("'", '"')
+    url_dict = json.loads(url_string)
     
     if s.query(Shorten_url).filter_by(url=url_dict).first().url:
         short_url = s.query(Shorten_url).filter_by(url=url_dict).first().short_url
@@ -21,14 +24,6 @@ async def gen_url(request, url_dict):
     id = s.query(Shorten_url).filter_by(url = url_dict).first().id
     s.close()
     return response.json({"url": url_dict, "shortUrl": short_url, "id": id, "success": "true"})
-
-
-@bp.route("/POST/shorten", methods=['POST','GET'])
-async def on_post(request):
-    data = request.body
-    url_string = data.decode('utf-8').replace("'", '"')
-    url_dict = json.loads(url_string)
-    return response.redirect('/generate_url/<url_dict>',url_dict['url'] )
 
 @bp.route("/DELETE/shorten/<id>")
 async def on_delete(request,id):
