@@ -11,8 +11,8 @@ class Shorten_url(Base):
     url = Column(String(1024))
     short_url = Column(String(1024), unique = True)
     
-    self.url=url
-    def assign(self, **kwargs):
+    
+    def __init__(self, url):
         super().__init__(**kwargs)
         self.short_url = self.generate_short_url(self.url)
 

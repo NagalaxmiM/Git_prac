@@ -12,6 +12,10 @@ async def on_post(request):
     #checking if the entered url is already in the database, if yes return already created short_url
     if s.query(Shorten_url).filter_by(url=url_dict['url']).first() == None:
         link = Shorten_url(url=url_dict['url'])
+        link = self.query.filter_by(short_url=short_url).first()
+        if link:
+            link = Shorten_url(url=url_dict['url'])
+        
         s.add(link)
         s.commit()
         short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).short_url
