@@ -25,7 +25,7 @@ class Shorten_url(Base):
        
     def generate_short_url(self, url):
         s = Session()
-        short_url = hashlib.sha1(self.url.encode()).hexdigest()
+        short_url = hashlib.sha1(self.url.encode()).hexdigest().......
         link = s.query(Shorten_url).filter_by(short_url=short_url).first()
         
         if link:
