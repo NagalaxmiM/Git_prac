@@ -33,13 +33,13 @@ class Shorten_url(Base):
       
         link = s.query(Shorten_url).filter_by(short_url=short_url).first()
         
-        while link:
+        while link!= None:
             characters = string.digits + string.ascii_letters
             adders = ''.join(choices(characters, k=3))
             url = self.url+adders
             short_url = hashlib.sha1(self.url.encode()).hexdigest()
             link = s.query(Shorten_url).filter_by(short_url=short_url).first()
-            if link:
+            if link_!= None:
                 short_url = hashlib.sha1(short_url.encode()).hexdigest() 
                 link = s.query(Shorten_url).filter_by(short_url=short_url).first()
 
