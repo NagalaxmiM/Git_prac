@@ -10,7 +10,8 @@ async def on_post(request):
     url_dict = request.json
     
     #checking if the entered url is already in the database, if yes return already created short_url
-    if s.query(Shorten_url).filter_by(url=url_dict['url'] is not None):
+
+    if s.query(Shorten_url).filter_by(url=url_dict['url']).first().url:
         short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).short_url
         id = s.query(Shorten_url).filter_by(url=url_dict['url']).id
         s.close()
