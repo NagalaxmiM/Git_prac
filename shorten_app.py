@@ -4,4 +4,6 @@ from shorten import bp
 app = Sanic(__name__)
 
 app.blueprint(bp)
-app.run(debug=True)
+
+if __name__=="__main__":
+    app.run(debug=True)
