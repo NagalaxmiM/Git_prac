@@ -24,7 +24,7 @@ async def on_post(request):
         s.close()
         return response.json({"url": url_dict['url'], "shortUrl": short_url, "id": id, "success": "true"})
 
-@bp.route("/DELETE/shorten/<id>", methods = ['POST'])
+@bp.route("/shorten/<id>", methods = ['POST'])
 async def on_delete(request,id):
     s = Session()
     try:
@@ -37,7 +37,7 @@ async def on_delete(request,id):
         s.close()
     return response.json({"success": "true"})
 
-@bp.route("/GET/<short_url>", methods = ['GET'])
+@bp.route("/<short_url>", methods = ['GET'])
 async def on_get(request,short_url):
     s = Session()
     try:
