@@ -40,7 +40,7 @@ class Shorten_url(Base):
             if link_!= None:
                 url_list = list(url)
                 random.shuffle(url_list)
-                shuffled_url = ''.join(url_list)
+                shuffled_url = ''.join(url_list).encode()
                 short_url = hashlib.sha1(shuffled_url.encode()).hexdigest()[0:7]
                 link = s.query(Shorten_url).filter_by(short_url=short_url).first()
         s.close()
