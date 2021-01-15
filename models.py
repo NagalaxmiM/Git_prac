@@ -34,8 +34,8 @@ class Shorten_url(Base):
         while link!= None:
             characters = string.digits + string.ascii_letters
             adders = ''.join(choices(characters, k=3))
-            url = self.url.encode()+adders
-            short_url = hashlib.sha1(url.encode()).hexdigest()[0:7]
+            url = self.url.encode()+adders.encode()
+            short_url = hashlib.sha1(url).hexdigest()[0:7]
             link = s.query(Shorten_url).filter_by(short_url=short_url).first()
             if link_!= None:
                 url_list = list(url)
