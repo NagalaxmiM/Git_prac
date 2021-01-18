@@ -22,7 +22,7 @@ class Shorten_url(Base):
     short_url = Column(String(1024), unique = True)
         
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        self.url = url
         self.short_url = self.generate_short_url(self.url)
        
     def generate_short_url(self, url):
