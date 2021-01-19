@@ -2,7 +2,7 @@ from sanic import Blueprint, response
 from models import Shorten_url, Session
 from sqlalchemy.orm import sessionmaker
 import json 
-bp = Blueprint('shortenUrlBlueprint')
+bp = Blueprint('shorten url blueprint')
 
 @bp.route("/shorten", methods=['POST'])  
 async def on_post(request): 
@@ -16,13 +16,13 @@ async def on_post(request):
         short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
         id = s.query(Shorten_url).filter_by(url = url_dict['url']).first().id
         s.close()
-        return response.json({"url": url_dict['url'], "shortUrl": short_url, "id": id, "success": "true"})
+        return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
 
     else:
         short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
         id = s.query(Shorten_url).filter_by(url=url_dict['url']).first().id
         s.close()
-        return response.json({"url": url_dict['url'], "shortUrl": short_url, "id": id, "success": "true"})
+        return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
 
 @bp.route("/shorten/<id>", methods = ['GET'])
 async def on_delete(request,id):
