@@ -24,7 +24,7 @@ async def on_post(request):
         s.close()
         return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
 
-@bp.route("/shorten/<id>", methods = ['GET'])
+@bp.route("/shorten/<id>", methods = ['POST'])
 async def on_delete(request,id):
     s = Session()
     try:
