@@ -28,20 +28,20 @@ class Shorten_url(Base):
     def generate_short_url(self, url):
         s = Session()      
         url = self.url
-        short_url = hashlib.sha1(url.encode()).hexdigest()[0:7]
+        short_url = "https"+hashlib.sha1(url.encode()).hexdigest()[0:7]
         link = s.query(Shorten_url).filter_by(short_url=short_url).first()
         
         while link!= None:
             characters = string.digits + string.ascii_letters
             adders = ''.join(choices(characters, k=3))
             url = self.url.encode()+adders.encode()
-            short_url = hashlib.sha1(url).hexdigest()[0:7]
+            short_url = "https"+hashlib.sha1(url).hexdigest()[0:7]
             link = s.query(Shorten_url).filter_by(short_url=short_url).first()
             if link_!= None:
                 url_list = list(url)
                 random.shuffle(url_list)
                 shuffled_url = ''.join(url_list)
-                short_url = hashlib.sha1(shuffled_url.encode()).hexdigest()[0:7]
+                short_url = "https"+hashlib.sha1(shuffled_url.encode()).hexdigest()[0:7]
                 link = s.query(Shorten_url).filter_by(short_url=short_url).first()
         s.close()
         return short_url
