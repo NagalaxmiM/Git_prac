@@ -16,13 +16,13 @@ async def on_post(request):
         short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
         id = s.query(Shorten_url).filter_by(url = url_dict['url']).first().id
         s.close()
-        return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
+        return response.json({"url": url_dict['url'], "short url": "https://"+short_url, "id": id, "success": "true"})
 
     else:
         short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
         id = s.query(Shorten_url).filter_by(url=url_dict['url']).first().id
         s.close()
-        return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
+        return response.json({"url": url_dict['url'], "short url": "https://"+short_url, "id": id, "success": "true"})
 
 @bp.route("/shorten/<id>", methods = ['POST'])
 async def on_delete(request,id):
@@ -41,6 +41,7 @@ async def on_delete(request,id):
 async def on_get(request,short_url):
     s = Session()
     try:
+        short_url = short_url[8:]
         actual_url = s.query(Shorten_url).filter_by(short_url=short_url).first().url
         return response.json({"success": "true", "url":actual_url })
     except:
