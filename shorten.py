@@ -24,7 +24,7 @@ async def onPost(request):
         s.close()
         return response.json({"url": actualUrl['url'], "short url": shortUrl, "id": id, "success": "true"})
 
-@bp.route("/shorten/<id>", methods = ['POST'])
+@bp.route("/shorten/<id>", methods = ['DELETE'])
 async def onDelete(request,id):
     s = Session()
     try:
@@ -41,7 +41,6 @@ async def onDelete(request,id):
 async def onGet(request,shortUrl):
     s = Session()
     try:
-        shortUrl = shortUrl[8:]
         actual_url = s.query(ShortenUrl).filter_by(shortUrl=shortUrl).first().url
         return response.json({"success": "true", "url":actual_url })
     except:

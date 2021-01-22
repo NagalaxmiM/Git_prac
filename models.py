@@ -10,8 +10,9 @@ from random import choices
 Base = declarative_base()      
 
 engine = create_engine(DATABASE_URI)
-Base.metadata.create_all(engine)
 Session = sessionmaker(bind = engine)
+Base.metadata.create_all(engine)
+
 
 
 class ShortenUrl(Base):
