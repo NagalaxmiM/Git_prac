@@ -2,6 +2,7 @@ from sanic import Blueprint, response
 from models import Shorten_url, Session
 from sqlalchemy.orm import sessionmaker
 import json 
+from urllib.parse import urlencode
 bp = Blueprint('shorten url blueprint')
 
 @bp.route("/shorten", methods=['POST'])  
@@ -24,7 +25,7 @@ async def on_post(request):
         s.close()
         return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
 
-@bp.route("/shorten/<id>", methods = ['POST'])
+@bp.route("/shorten/<id>", methods = ['DELETE'])
 async def on_delete(request,id):
     s = Session()
     try:
@@ -35,13 +36,14 @@ async def on_delete(request,id):
         return response.text("Invalid ID!")
     finally:
         s.close()
-    return response.json({"success": "true"})
+        return response.json({"success": "true"})
 
-@bp.route("/<short_url>", methods = ['POST'])
+@bp.route("/<short_url>", methods = ['GET'])
 async def on_get(request,short_url):
     s = Session()
     try:
         actual_url = s.query(Shorten_url).filter_by(short_url=short_url).first().url
+        s.commit()
         return response.json({"success": "true", "url":actual_url })
     except:
         return response.text("Invalid SHORT URL !!")
