@@ -1,36 +1,36 @@
 from sanic import Blueprint, response
-from models import Shorten_url, Session
+from models import ShortenUrl, Session
 from sqlalchemy.orm import sessionmaker
 import json 
 from urllib.parse import urlencode
 bp = Blueprint('shorten url blueprint')
 
 @bp.route("/shorten", methods=['POST'])  
-async def on_post(request): 
+async def onPost(request): 
     s = Session()
-    url_dict = request.json
+    urlDict = request.json
     
-    if s.query(Shorten_url).filter_by(url=url_dict['url']).first() == None:
-        link = Shorten_url(url=url_dict['url'])
+    if s.query(ShortenUrl).filter_by(url=urlDict['url']).first() == None:
+        link = ShortenUrl(url=urlDict['url'])
         s.add(link)
         s.commit()
-        short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
-        id = s.query(Shorten_url).filter_by(url = url_dict['url']).first().id
+        shortUrl = s.query(ShortenUrl).filter_by(url=urlDict['url']).first().shortUrl
+        id = s.query(ShortenUrl).filter_by(url = urlDict['url']).first().id
         s.close()
-        return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
+        return response.json({"url": urlDict['url'], "short url": shortUrl, "id": id, "success": "true"})
 
     else:
-        short_url = s.query(Shorten_url).filter_by(url=url_dict['url']).first().short_url
-        id = s.query(Shorten_url).filter_by(url=url_dict['url']).first().id
+        shortUrl = s.query(ShortenUrl).filter_by(url=urlDict['url']).first().shortUrl
+        id = s.query(ShortenUrl).filter_by(url=urlDict['url']).first().id
         s.close()
-        return response.json({"url": url_dict['url'], "short url": short_url, "id": id, "success": "true"})
+        return response.json({"url": urlDict['url'], "short url": shortUrl, "id": id, "success": "true"})
 
 @bp.route("/shorten/<id>", methods = ['DELETE'])
 async def on_delete(request,id):
     s = Session()
     try:
-        to_be_deleted = s.query(Shorten_url).filter_by(id=id).first()
-        s.delete(to_be_deleted)
+        toBeDeleted = s.query(ShortenUrl).filter_by(id=id).first()
+        s.delete(toBeDeleted)
         s.commit()
     except:
         return response.text("Invalid ID!")
@@ -38,11 +38,11 @@ async def on_delete(request,id):
         s.close()
         return response.json({"success": "true"})
 
-@bp.route("/<short_url>", methods = ['GET'])
-async def on_get(request,short_url):
+@bp.route("/<shortUrl>", methods = ['GET'])
+async def on_get(request,shortUrl):
     s = Session()
     try:
-        actual_url = s.query(Shorten_url).filter_by(short_url=short_url).first().url
+        actual_url = s.query(ShortenUrl).filter_by(shortUrl=shortUrl).first().url
         s.commit()
         return response.json({"success": "true", "url":actual_url })
     except:
